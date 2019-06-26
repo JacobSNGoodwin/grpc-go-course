@@ -21,7 +21,7 @@ func main() {
 
 	c := calculatorpb.NewCalculatorServiceClient(cc)
 
-	doUnary(c)
+	// doUnary(c)
 	doServerStreaming(c)
 }
 
@@ -48,7 +48,7 @@ func doServerStreaming(c calculatorpb.CalculatorServiceClient) {
 	fmt.Println("In doServerStreaming...")
 
 	req := &calculatorpb.PrimeNumberDecompositionRequest{
-		Number: 725,
+		Number: 120,
 	}
 
 	resStream, err := c.PrimeNumberDecomposition(context.Background(), req)
@@ -69,6 +69,6 @@ func doServerStreaming(c calculatorpb.CalculatorServiceClient) {
 			log.Fatalf("Error while reading stream: %v", err)
 		}
 
-		log.Printf("Response from GreetManyTimes: %v", msg.GetPrimeFactor())
+		log.Printf("Response from GreetPrimeFactor: %v", msg.GetPrimeFactor())
 	}
 }
