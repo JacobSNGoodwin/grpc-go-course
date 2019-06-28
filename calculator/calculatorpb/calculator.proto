@@ -1,33 +1,32 @@
 syntax = "proto3";
 
 package calculator;
-option go_package="calculatorpb";
+option go_package = "calculatorpb";
 
 message Sum {
   int64 num1 = 1;
   int64 num2 = 2;
 }
 
-message SumRequest {
-  Sum sum = 1;
-}
+message SumRequest { Sum sum = 1; }
 
-message SumResponse {
-  int64 result = 1;
-}
+message SumResponse { int64 result = 1; }
 
-message PrimeNumberDecompositionRequest {
-  int64 number = 1;
-}
+message PrimeNumberDecompositionRequest { int64 number = 1; }
 
-message PrimeNumberDecompositionResponse {
-  int64 prime_factor = 1;
-}
+message PrimeNumberDecompositionResponse { int64 prime_factor = 1; }
 
-service CalculatorService{
+message ComputeAverageRequest { int64 number = 1; }
+
+message ComputeAverageResponse { double result = 1; }
+
+service CalculatorService {
   // unary
   rpc Sum(SumRequest) returns (SumResponse) {};
 
-  rpc PrimeNumberDecomposition(PrimeNumberDecompositionRequest) returns (stream PrimeNumberDecompositionResponse) {};
-}
+  rpc PrimeNumberDecomposition(PrimeNumberDecompositionRequest)
+      returns (stream PrimeNumberDecompositionResponse) {};
 
+  rpc ComputeAverage(stream ComputeAverageRequest)
+      returns (ComputeAverageResponse) {};
+}
