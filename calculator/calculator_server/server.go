@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 	"net"
 
 	"github.com/maxbrain0/grpc-go-course/calculator/calculatorpb"
@@ -75,6 +76,42 @@ func (*server) ComputeAverage(stream calculatorpb.CalculatorService_ComputeAvera
 		count++
 		sum += req.GetNumber()
 	}
+}
+
+func (*server) FindMaximum(stream calculatorpb.CalculatorService_FindMaximumServer) error {
+	fmt.Printf("FindMaximum function was invoked with a streaming request")
+
+	max := int64(math.MinInt64)
+
+	for {
+		req, err := stream.Recv()
+
+		if err == io.EOF {
+			// finished reading client stream
+			return nil
+		}
+
+		if err != nil {
+			log.Fatalf("Error while reading client stream: %v", err)
+			return err
+		}
+
+		current := req.GetNumber()
+
+		if current > max {
+			max = current
+		}
+
+		sendErr := stream.Send(&calculatorpb.FindMaximumResponse{
+			Result: max,
+		})
+
+		if sendErr != nil {
+			log.Fatalf("Error while sending data to client: %v", err)
+			return err
+		}
+	}
+
 }
 
 func main() {
