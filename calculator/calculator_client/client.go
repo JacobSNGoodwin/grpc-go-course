@@ -150,7 +150,7 @@ func doBiDiStreaming(c calculatorpb.CalculatorServiceClient) {
 
 	waitc := make(chan struct{})
 
-	// we send a bunch of messages to the client (go routine)
+	// we send a bunch of messages to the server (go routine)
 	go func() {
 		// function to send a bunch of messages
 		for _, req := range requests {
