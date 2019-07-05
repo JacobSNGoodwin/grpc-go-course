@@ -40,5 +40,8 @@ service CalculatorService {
 
   rpc FindMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse) {};
 
+  // error handling
+  // this RPC will throw an exception if the sent number is negative
+  // The error being sent if of type INVALID_ARGUMENT
   rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
 }
