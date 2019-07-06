@@ -250,6 +250,8 @@ func doUnaryWithDeadline(c greetpb.GreetServiceClient, timeout time.Duration) {
 		} else {
 			log.Fatalf("error while calling GreetWithDeadline RPC: %v", err)
 		}
+		// need to return if case of errors as res.Result will not exist if we get an error
+		return
 	}
 
 	log.Printf("Response from GreetWithDeadline: %v", res.Result)
