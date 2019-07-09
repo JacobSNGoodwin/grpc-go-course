@@ -37,4 +37,27 @@ func main() {
 	}
 
 	fmt.Printf("Blog has been created: %v\n", createBlogRes)
+
+	// extact inserted id for next step
+	blogID := createBlogRes.GetBlog().GetId()
+
+	// read Blog
+	fmt.Println("Reading the blog (post)")
+
+	// bad read
+	_, err2 := c.ReadBlog(context.Background(), &blogpb.ReadBlogRequest{BlogId: "a012fx"})
+
+	if err2 != nil {
+		fmt.Printf("Error occured while reading (finding) blog (post): %v \n", err2)
+	}
+
+	// good read
+	readBlogReq := &blogpb.ReadBlogRequest{BlogId: blogID}
+	readBlogRes, readBlogErr := c.ReadBlog(context.Background(), readBlogReq)
+
+	if readBlogErr != nil {
+		fmt.Printf("Error occured while reading (finding) blog (post): %v \n", readBlogErr)
+	}
+
+	fmt.Printf("Blog was read: %v", readBlogRes.GetBlog())
 }
