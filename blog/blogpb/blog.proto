@@ -34,5 +34,5 @@ service BlogService {
   rpc ReadBlog(ReadBlogRequest)
       returns (ReadBlogResponse); // return NOT_FOUND if not found
   rpc UpdateBlog (UpdateBlogRequest) returns (UpdateBlogResponse); // return NOT_FOUND if not found
-  rpc DeleteBlog (DeleteBlogRequest) returns (DeleteBlogResponse); // return NOT_FOUND if not found
+  rpc DeleteBlog (DeleteBlogRequest) returns (DeleteBlogResponse); // return INTERNAL if a document can't be deleted
 }
